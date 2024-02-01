@@ -1,0 +1,1 @@
+<img src="https://aulab.it/wp-content/uploads/2023/04/aulab-lgo.svg" class="img-fluid" alt="{{$alternativo}}">
