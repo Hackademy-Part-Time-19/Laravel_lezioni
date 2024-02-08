@@ -13,6 +13,14 @@ class ArticleController extends Controller
                         ['titolo'=> 'Articolo di sport 2', 'descrizione'=>'descrizione di prova','nome'=>'Laura','category'=>'sport']
                         ];
 
+        public $database = [
+            ['nome'=> 'Luca','cognome'=>'Bianchi'],
+            ['titolo'=>'Sport','corpo'=> 'Lorem bla bla'],
+            
+
+
+
+        ];
     // private $categories= ['sport','film','elettronica','cultura'];
 
     // public function __construct()
