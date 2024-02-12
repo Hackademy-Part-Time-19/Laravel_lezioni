@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('title',100);
             $table->string('category',50);
             $table->text('description');
-            $table->boolean('active')->nullable();
             $table->timestamps();
         });
     }

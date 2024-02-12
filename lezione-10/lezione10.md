@@ -1,48 +1,57 @@
-# Lezione 9 - Modelli e migrazioni
+# Lezione 10 - Validazione e storage di file
 
+# Recap lezione precedente
+    - Form inserimento dati e creazione modello
+    - Recuperare e mostrare i dati, tramite query builder o eloquent 
+    - ripasso all() e get() con approfondimento
 
-# MySQL e TablePlus
+    -Collections : https://laravel.com/docs/10.x/eloquent-collections#available-methods 
 
-- Installazione MySQL e TablePlus
+# Validazione
 
-- Configurazione TablePlus
+    - $request->validate() e funzionamento
+        - regole di validazione: sintassi e utilizzo
+        - 'campo' => 'rule1|rule2|rule...'
+        
+    - Validator::make come approfondimento e $validator->fails()
+    - Custom messages
+        - 'campo.regola' => 'messaggio per la regola'
 
-- Ripasso di utilizzo MySQL RDBMS
+    - Gestion errori
+        - Visualizzazione errori in $errors
+        - Direttiva blade alternativa @error('campo') {{$message}} @enderror
 
-# Laravel e MySQL
+    - Creazione request con validazione: php artisan make:request NomeRequest
+        - public function authorize()
+        - public function rules()
+        - public function messages()
 
-- Configurazione .env
+    - Utilizzo Request nel controller
 
-- php artisan db:show 
+    -helper old('campo') e withErrors($validator)->withInput()
 
-# Migrations 
+# File upload
 
-- Cos'è una migration
+    - Modifica form
+         - enctype
+         - input 
 
-- Creare una migration: https://laravel.com/docs/10.x/migrations#introduction
-    - Up e down
-    - Schema
-    - Dati nella migration:
-        - Tipo numerico: https://dev.mysql.com/doc/refman/8.0/en/numeric-types.html
-        - Tipo stringa: https://dev.mysql.com/doc/refman/8.0/en/string-types.html
-        - Tipo tempo: https://dev.mysql.com/doc/refman/8.0/en/date-and-time-types.html
+    - gestione file nella request
+    - esempio caricamento immagini
 
-    - Conversione articoli da array a database
+    - $request->hasFile('nomefile') vs $request->file('nomefile')
+        ->getClientOriginalName() , ->extension() ,  recuperano rispettivamente il nome del file completo e l'estensione del file
 
-    - php artisan migrate
-    - php artisan status
-    - php artisan migrate:rollback
-    - php artisan migrate:fresh
-    - php artisan migrate:refresh
+    - store() vs storeAs()
+    
+    - Recuperare le immagini salvate e approfondimenti
+        - php artisan storage:link, crea un link virtuale che condivide il contenuto di storage/app/public alla cartella public accessibile da utenti esterni
+        - Storage::url('nome url')
 
-# Models
+# Extra
 
-- Cos'è un modello e a cosa serve in laravel
-- Cenni Eloquent ORM: un ORM o object relational mapper serve a mettere in comunicazione una classe model con una tabella associata sul database
-- Creazione modello article
-- Inserimento dati nel database tramite modello
-- Recuperare dati dal database
+    - La size dei file da poter inserire in una request è definita nel php.ini proprietà upload_max_filesize
 
-# Extra 
+    - Approfondimento storage facade
 
-- Usare form per caricare i dati a database
+    - local vs other

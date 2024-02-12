@@ -7,9 +7,9 @@
                 :name="$article['name']" 
                 :title="$article['title']" 
                 :description="$article['description']"
-                :id="$article['id']">
-               
-                </x-card>
+                :id="$article['id']"
+                :image="$article['image']">
+                </x-card>    
             @endforeach
 
         </div>

@@ -4,9 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\ArticleStoreRequest;
 
 class ArticleController extends Controller
 {
+
+    // eloquent e query builder 
+
 
     public function index(){
         $titolo = 'Articoli';
@@ -34,23 +39,62 @@ class ArticleController extends Controller
         return view('articoli-bycategory',['articles'=>$articlesByCategory]);
     }
 
-    public function store(Request $request){
+    public function store(ArticleStoreRequest $request){
 
-    //    $article = new Article;
-    //    $article->title = $request->title;
-    //    $article->description = $request->description;
-    //    $article->active=$request->active;
+        $validated = $request->validated();
 
-    //    $article->save();
+        $article = Article::create($validated);
+
+        if($request->hasFile('image')){
+            
+            $path = 'public/images';
+
+            $name = $article['id'] . 'copertina' .'.'. $request->file('image')->extension() ;
+            
+            $file = $request->file('image')->storeAs($path,$name);
+            $image = $path .'/'. $name;
+            
+            $article->image = $image;
+            $article->save();
+        }
+        
+
+        return redirect()->back()->with(['success' =>'Articolo inserito con successo']);
+
+
+        //sezione validazione dati
+
+        // $validated = $request->validate([
+        //     'title' => 'required|max:100',
+        //     'description' => 'required|min:10',
+        //     'category'=> 'required'
+        // ]);
+
+
+        // se la validazione fallisce vengo reindirizzato alla pagina invio form con gli errori associati
+
+        // $validator = Validator::make($request->all(),[
+        //     'title' => 'required|max:100',
+        //     'description' => 'required|min:10',
+        //     'category'=> 'required'
+        // ],[
+        //     'title.required'=>'Il titolo deve esistere',
+
+
+        // ]
+        // );
+
+        // if($validator->fails()){
+        //     return redirect()->back()->withErrors($validator)->withInput();
+
+        // }
 
 
 
-        //create permette di salvare a database un oggetto
-        // del modello con i campi del valore passato come parametro a create()
-       Article::create($request->all());
-
-       return redirect()->back()->with(['success' =>'Articolo inserito con successo']);
-
+    //create permette di salvare a database un oggetto
+    // del modello con i campi del valore passato come parametro a create()
+        
+            
     }
 
     public function create(){
