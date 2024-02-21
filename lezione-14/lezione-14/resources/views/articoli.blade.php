@@ -1,5 +1,5 @@
 <x-layout>
-
+    <x-delete/>
     <div class="container">
         <div class="row">
             @foreach ($articles as $article)
