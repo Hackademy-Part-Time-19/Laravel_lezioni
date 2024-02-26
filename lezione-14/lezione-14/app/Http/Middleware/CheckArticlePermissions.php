@@ -14,8 +14,9 @@ class CheckArticlePermissions
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next, $barticle): Response
     {   
+        dd($barticle);
         // per verificare se l'utente può modificare l'articolo vado a usare il parametro $request->id per recuperare il modello e lo comparo con quello dell'utente loggato
         if(auth()->user()->id == Article::find($request->article)->user_id){
             return $next($request);

@@ -16,7 +16,7 @@
 
                     <div class="mb-3">
                         <label for="price" class="form-label">Prezzo</label>
-                        <input name="price" type="decimal" class="form-control" id="price" value="{{old('price',$book->price)}}">
+                        <input name="price" type="number" class="form-control" id="price" value="{{old('price',$book->price)}}">
                     </div>
                     @error('price')
                         <span class="text-danger"> {{ $message }}</span>
