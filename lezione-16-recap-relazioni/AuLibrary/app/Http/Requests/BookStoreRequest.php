@@ -25,7 +25,7 @@ class BookStoreRequest extends FormRequest
         return [
             'title'=> 'required|max:50',
             'description'=>'required|min:20|max:200',
-            'price'=>'required',
+            'price'=>'required|max_digits:3',
             'image'=>'image|max:4096',
         ];
     }

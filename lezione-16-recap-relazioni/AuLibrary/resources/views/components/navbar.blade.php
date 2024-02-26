@@ -14,6 +14,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{route('books.create')}}">Inserisci un libro</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{route('user.books')}}">{{auth()->user()->name}}, ecco i tuoi libri</a>
+                </li>
                 @endauth
                 @guest
                     <li class="nav-item dropdown">
@@ -31,7 +34,7 @@
                     <li class="nav-item">
                         <form action="/logout" method="POST">
                             @csrf
-                            <button type="submit">Logout</button>
+                            <button class="btn" type="submit">Logout</button>
                         </form>
                     </li>
                 @endauth

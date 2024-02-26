@@ -1,8 +1,9 @@
 <x-layout>
+    <x-success></x-success>
     <div class="container">
         <div class="row">
             <div class="col-lg-4 mx-auto">
-                <form class="mt-5" action="{{ route('books.update') }}" method="POST" enctype="multipart/form-data">
+                <form class="mt-5" action="{{ route('books.update',['book'=>$book]) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <h1>Aggiorna il libro {{$book->title}}</h1>

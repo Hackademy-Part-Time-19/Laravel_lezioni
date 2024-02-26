@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\BookStoreRequest;
 use App\Models\Book;
+use App\Models\User;
+use App\Models\Genre;
 use Illuminate\Http\Request;
+use App\Http\Requests\BookStoreRequest;
 
 class BookController extends Controller
 {
@@ -13,7 +15,8 @@ class BookController extends Controller
      */
     public function index()
     {
-        $books= Book::all();
+        $books=Book::all();
+        // dd($books);
         return view('books.index',compact('books'));
     }
 
@@ -22,7 +25,8 @@ class BookController extends Controller
      */
     public function create()
     {
-        return view('books.create');
+        $genres= Genre::all();
+        return view('books.create',compact('genres'));
     }
 
     /**
@@ -31,10 +35,17 @@ class BookController extends Controller
     public function store(BookStoreRequest $request)
     {
         $validated= $request->validated();
-        Book::create(['author'=>auth()->user()->name, 'title'=>$validated['title'],'description'=>$validated['description'],'price'=>$validated['price']]);
-        // if($request->hasFile('image') && $request->file('image')->isValid()){
-            
-        // }
+        $book= Book::create(['user_id'=>auth()->user()->id, 'title'=>$validated['title'],'description'=>$validated['description'],'price'=>$validated['price'],'image'=>'public/books/default/default.jpg']);
+        if($request->hasFile('image') && $request->file('image')->isValid()){
+            $file= $request->file('image');
+            $name= uniqid().$book->id.'.'.$file->extension();
+            $file->storeAs('public/books/'.$book->id,$name);
+
+            $book->image='public/books/'.$book->id.'/'.$name;
+            $book->save();
+        }
+        $book->genres()->attach($request->genres);
+
         return redirect()->back()->with(['success'=>'Libro inserito con successo']);
     }
 
@@ -59,6 +70,7 @@ class BookController extends Controller
      */
     public function update(BookStoreRequest $request, Book $book)
     {
+        
         $validated= $request->validated();
         $book->update(['title'=>$validated['title'],'description'=>$validated['description'],'price'=>$validated['price']]);
         // if($request->hasFile('image') && $request->file('image')->isValid()){
@@ -75,5 +87,12 @@ class BookController extends Controller
         $book->delete();
 
         //Book::destroy($book->id);
+        return redirect()->back()->with(['delete'=>'Articolo eliminato con successo']);
+    }
+
+    public function userBooks(){
+        //$books= Book::where('id',$user->id);
+        $books= auth()->user()->books;
+        return view('user.books',compact('books'));
     }
 }

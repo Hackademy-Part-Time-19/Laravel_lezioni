@@ -8,16 +8,34 @@
     - Generi: inseriti da un amministratore e selezionabili alla pubblicazione del libro (extra) 
     - Recensioni (da fare)
 
-# 
+# Conversione a relazione One To Many tra user e book
 
+    - nuova migrazione per aggiornare il database -> eliminare colonna author, inserire foreign key user_id
+    - belongsTo e hasMany nei modelli che voglio mettere in relazione
 
+    - chiamare sull'oggetto i metodi appena definiti ad es. auth()->user()->books
 
+# Many to many tra books e genres
 
+    - creiamo il modello genre: php artisan make:model Genre -mcr
+    - creazione tabella pivot: creo la tabella book_genre che conterrà due foreign key
+        - genre_id e book_id
 
+    - definisco le funzioni sui modelli:
+        - Per il genere: books() -> belongsToMany(Book::class)
+        - Per il libro: genres() -> belongsToMany(Genre::class)
 
+    - attach e detach
+    
+# 1-N
+- hasMany(Modello) e belongsTo(Modello) belongsTo sul modello la cui tabella ha la foreign key
 
+# N-N 
+- belongsToMany(Modello) x2
 
+# 1-1 
 
+- hasOne(Modello) e belongsTo(Modello)   belongsTo sul modello la cui tabella ha la foreign key
 
 
 
