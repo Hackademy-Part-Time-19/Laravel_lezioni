@@ -7,7 +7,7 @@ use App\Models\User;
 use Livewire\Component;
 use Livewire\Attributes\Url;
 use Livewire\WithPagination;
-use Livewire\WithoutUrlPagination;
+
 
 class SearchUsers extends Component
 {
@@ -22,11 +22,11 @@ class SearchUsers extends Component
     {
         if($this->search==""){
 
-            $this->users = Post::paginate(10);
+            $this->users = Post::all();
         }else{
-            $this->users= Post::where('name','like','%'.$this->search.'%')->orWhere('email','like','%'.$this->search.'%')->orderBy('name','ASC')->paginate(10);
+            $this->users= Post::where('name','like','%'.$this->search.'%')->orWhere('email','like','%'.$this->search.'%')->orderBy('name','ASC')->get();
         }
         
-        return view('livewire.search-users');
+        return view('livewire.search-users',['post'=>Post::paginate(6)]);
     }
 }

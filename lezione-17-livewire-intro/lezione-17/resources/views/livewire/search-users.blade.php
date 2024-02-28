@@ -9,7 +9,7 @@
                 <input type="text" wire:model.live="search" id="search">
             </div>
 
-            @foreach ($users as $user)
+            @foreach ($post as $user)
                 <div class="card" style="width: 18rem;" wire:key="{{ $user->id }}">
 
                     <div class="card-body">
@@ -19,7 +19,7 @@
                     </div>
                 </div>
             @endforeach
-            {{ $users->links() }}
+            {{ $post->links() }}
         </div>
     </div>
 
