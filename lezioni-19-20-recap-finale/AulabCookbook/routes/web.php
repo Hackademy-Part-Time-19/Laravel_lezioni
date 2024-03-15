@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Http\Controllers\RecipeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,10 +18,12 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/ricetta/{versione?}',function (string $versione ="pasta"){
-    return $versione ;
-});
+// Route::get('/ricetta/{versione?}',function (string $versione ="pasta"){
+//     return $versione ;
+// });
 
 Route::get('/contacts',[\App\Http\Controllers\PageController::class,'contacts'])->name('contacts');
 
 Route::post('/contacts/send',[\App\Http\Controllers\PageController::class,'send'])->name('contacts.send');
+
+Route::resource('recipes',RecipeController::class);
